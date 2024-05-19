@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Kriteria {
     private int id;
     private String namaKriteria;
-    private double bobot;
+    private String tipeKriteria;
+    private int bobotKriteria;
 }
 

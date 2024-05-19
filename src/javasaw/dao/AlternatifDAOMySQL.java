@@ -22,6 +22,27 @@ public class AlternatifDAOMySQL implements AlternatifDAO {
             e.printStackTrace();
         }
     }
+    
+    public List<Alternatif> getAllAlternatifsWithKeyword(String keyword) {
+        List<Alternatif> alternatifs = new ArrayList<>();
+
+        try (Connection connection = DatabaseMySQL.connectDB();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM alternatif WHERE nama_alternatif LIKE ?")) {
+            stmt.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Alternatif a = new Alternatif();
+                    a.setId(rs.getInt("id"));
+                    a.setNamaAlternatif(rs.getString("nama_alternatif"));
+                    alternatifs.add(a);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alternatifs;
+    }
 
     @Override
     public void updateAlternatif(Alternatif alternatif) {

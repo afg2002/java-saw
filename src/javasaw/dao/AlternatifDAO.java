@@ -14,7 +14,9 @@ import javasaw.model.Alternatif;
 public interface AlternatifDAO {
     void insertAlternatif(Alternatif alternatif);
     void updateAlternatif(Alternatif alternatif);
+    
     void deleteAlternatif(int id);
     List<Alternatif> getAllAlternatif();
+    List<Alternatif> getAllAlternatifsWithKeyword(String keyword);
     Alternatif getAlternatifById(int id);
 }

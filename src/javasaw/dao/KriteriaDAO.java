@@ -17,4 +17,5 @@ public interface KriteriaDAO {
     void deleteKriteria(int id);
     List<Kriteria> getAllKriteria();
     Kriteria getKriteriaById(int id);
+    List<Kriteria> getAllKriteriasWithKeyword(String keyword);
 }
