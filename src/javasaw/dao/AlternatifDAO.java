@@ -19,4 +19,5 @@ public interface AlternatifDAO {
     List<Alternatif> getAllAlternatif();
     List<Alternatif> getAllAlternatifsWithKeyword(String keyword);
     Alternatif getAlternatifById(int id);
+    Integer getCountAlternatif();
 }

@@ -14,7 +14,7 @@ import javasaw.model.User;
 public interface UsersDAO {
     List<User> getAllUsers();
 
-    User getUserById(int id);
+    List<User> getUserByUsername(String username);
 
     void insertUser(User user);
 

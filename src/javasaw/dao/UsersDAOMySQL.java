@@ -50,43 +50,41 @@ public class UsersDAOMySQL implements UsersDAO{
     }
 
     @Override
-    public User getUserById(int id) {
-        User user = null;
+    public List<User> getUserByUsername(String username) {
+        List<User> userList = new ArrayList<>();
 
         try (Connection connection = DatabaseMySQL.connectDB();
              PreparedStatement stmt = connection.prepareStatement(
-                     "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?")) {
+                     "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + " = ?")) {
 
-            stmt.setInt(1, id);
+            stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User();
+                User user = new User();
                 user.setId(rs.getInt(COLUMN_ID));
                 user.setUsername(rs.getString(COLUMN_USERNAME));
                 user.setPassword(rs.getString(COLUMN_PASSWORD));
                 user.setCreatedAt(rs.getTimestamp(COLUMN_CREATED_AT).toLocalDateTime());
                 user.setUpdatedAt(rs.getTimestamp(COLUMN_UPDATED_AT).toLocalDateTime());
+                userList.add(user);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return user;
+        return userList;
     }
 
     @Override
     public void insertUser(User user) {
         try (Connection connection = DatabaseMySQL.connectDB();
              PreparedStatement stmt = connection.prepareStatement(
-                     "INSERT INTO " + TABLE_NAME + " (" + COLUMN_USERNAME + ", " + COLUMN_PASSWORD +
-                             ", " + COLUMN_CREATED_AT + ", " + COLUMN_UPDATED_AT + ") VALUES (?, ?, ?, ?)")) {
+                     "INSERT INTO " + TABLE_NAME + " (" + COLUMN_USERNAME + ", " + COLUMN_PASSWORD + ") VALUES (?, ?)")) {
 
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
-            stmt.setTimestamp(3, Timestamp.valueOf(user.getCreatedAt()));
-            stmt.setTimestamp(4, Timestamp.valueOf(user.getUpdatedAt()));
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -99,12 +97,11 @@ public class UsersDAOMySQL implements UsersDAO{
         try (Connection connection = DatabaseMySQL.connectDB();
              PreparedStatement stmt = connection.prepareStatement(
                      "UPDATE " + TABLE_NAME + " SET " + COLUMN_USERNAME + " = ?, " + COLUMN_PASSWORD +
-                             " = ?, " + COLUMN_UPDATED_AT + " = ? WHERE " + COLUMN_ID + " = ?")) {
+                             " = ? WHERE " + COLUMN_ID + " = ?")) {
 
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
-            stmt.setTimestamp(3, Timestamp.valueOf(user.getUpdatedAt()));
-            stmt.setInt(4, user.getId());
+            stmt.setInt(3, user.getId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {

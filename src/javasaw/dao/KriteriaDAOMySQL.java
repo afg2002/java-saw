@@ -127,4 +127,21 @@ public class KriteriaDAOMySQL implements KriteriaDAO {
         }
         return kriteria;
     }
+
+    @Override
+    public Integer getCountKriteria() {
+      Integer count = 0;
+      try (Connection connection = DatabaseMySQL.connectDB()) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+          count = resultSet.getInt(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      return count;
+    }
+
 }

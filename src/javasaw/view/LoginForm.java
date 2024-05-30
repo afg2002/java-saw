@@ -109,7 +109,11 @@ public class LoginForm extends javax.swing.JFrame {
         user.setPassword(new String(txtPassword.getPassword()));
         
         if(usersDAO.isValid(user)){
-            JOptionPane.showMessageDialog(null, "Halo" + user.getUsername());
+//            JOptionPane.showMessageDialog(null, "Halo" + user.getUsername());
+            DashboardForm df = new DashboardForm();
+            this.dispose();
+            df.txtUser.setText(user.getUsername());
+            df.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Salah");
         }

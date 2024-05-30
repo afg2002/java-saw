@@ -18,4 +18,5 @@ public interface KriteriaDAO {
     List<Kriteria> getAllKriteria();
     Kriteria getKriteriaById(int id);
     List<Kriteria> getAllKriteriasWithKeyword(String keyword);
+    Integer getCountKriteria();
 }

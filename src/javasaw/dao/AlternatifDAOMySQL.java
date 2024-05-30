@@ -106,4 +106,22 @@ public class AlternatifDAOMySQL implements AlternatifDAO {
         }
         return alternatif;
     }
+
+    @Override
+    
+    public Integer getCountAlternatif() {
+      Integer count = 0;
+      try (Connection connection = DatabaseMySQL.connectDB()) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME; // Replace with your actual table name
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+          count = resultSet.getInt(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      return count;
+    }
+
 }
