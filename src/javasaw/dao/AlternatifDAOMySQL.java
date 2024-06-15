@@ -7,7 +7,7 @@ import javasaw.database.DatabaseMySQL;
 import javasaw.model.Alternatif;
 
 public class AlternatifDAOMySQL implements AlternatifDAO {
-    private static final String TABLE_NAME = "Alternatif";
+    private static final String TABLE_NAME = "alternatif";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAMA_ALTERNATIF = "nama_alternatif";
 

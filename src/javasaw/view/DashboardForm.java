@@ -203,6 +203,7 @@ public class DashboardForm extends javax.swing.JFrame {
         }else if(getCountAlternatif().equals(0) || getCountAlternatif() == null){
              JOptionPane.showMessageDialog(null, "Silakan isi Alternatif terlebih dahulu.");
         }else{
+            pf.setVisible(true);
         }
     }//GEN-LAST:event_btnPenilaianActionPerformed
 

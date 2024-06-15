@@ -15,7 +15,7 @@ import java.util.List;
  * @author afgha
  */
 public class KriteriaDAOMySQL implements KriteriaDAO {
-    private static final String TABLE_NAME = "Kriteria";
+    private static final String TABLE_NAME = "kriteria";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAMA_KRITERIA = "nama_kriteria";
     private static final String COLUMN_NAMA_TIPE_KRITERIA = "tipe_kriteria";

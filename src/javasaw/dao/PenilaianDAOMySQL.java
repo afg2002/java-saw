@@ -11,7 +11,7 @@ import javasaw.database.DatabaseMySQL;
 import javasaw.model.Penilaian;
 
 public class PenilaianDAOMySQL implements PenilaianDAO {
-    private static final String TABLE_NAME = "Penilaian";
+    private static final String TABLE_NAME = "penilaian";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_ID_ALTERNATIF = "id_alternatif";
     private static final String COLUMN_ID_KRITERIA = "id_kriteria";

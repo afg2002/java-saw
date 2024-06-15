@@ -134,7 +134,7 @@ public class UsersDAOMySQL implements UsersDAO{
     }
 
     try (Connection connection = DatabaseMySQL.connectDB()) {
-        String query = "SELECT COUNT(*) FROM Users WHERE username = ? AND password = ?";
+        String query = "SELECT COUNT(*) FROM "+TABLE_NAME+" WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, user.getUsername());
         preparedStatement.setString(2, user.getPassword());
