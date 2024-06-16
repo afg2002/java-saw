@@ -4,29 +4,23 @@
  */
 package javasaw.view;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javasaw.dao.AlternatifDAO;
 import javasaw.dao.AlternatifDAOMySQL;
 import javasaw.dao.KriteriaDAO;
 import javasaw.dao.KriteriaDAOMySQL;
+import javasaw.dao.NormalisasiDAO;
+import javasaw.dao.NormalisasiDAOMySQL;
+import javasaw.dao.RankingDAO;
+import javasaw.dao.RankingDAOMySQL;
 import javasaw.model.Alternatif;
 import javasaw.model.Kriteria;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -40,6 +34,9 @@ public class PenilaianForm extends javax.swing.JFrame {
     private Integer baris,kolom;
     private List<Kriteria> listKriteria = null;
     private List<Alternatif> listAlternatif = null;
+    private JTextField[][] textFields;
+    
+    
     
     public PenilaianForm() {
         initComponents();
@@ -47,31 +44,24 @@ public class PenilaianForm extends javax.swing.JFrame {
         alternatifDAO = new AlternatifDAOMySQL();
         loadKriteriaRowAndColumn();
         
+        
     }
     
     private void loadKriteriaRowAndColumn(){
         List<Kriteria> kriteria = kriteriaDAO.getAllKriteria();
         listKriteria = kriteria;
-        kriteriaPanel.setLayout(new BoxLayout(kriteriaPanel,BoxLayout.X_AXIS));
+        kriteriaPanel.setLayout(new GridLayout(1, listKriteria.size()));
         // Set a maximum size for the kriteriaPanel
         kriteriaPanel.setMaximumSize(new Dimension(737, 50)); // Adjust the size as needed
         kriteriaPanel.setPreferredSize(new Dimension(737, 50)); // Set preferred size for consistency
 
-        // Clear the panel before adding new components
-        kriteriaPanel.removeAll();
         
         listKriteria.forEach((e) -> {
             JLabel label = new JLabel();
-            label.setText(e.getNamaKriteria());
-            System.out.println(e.getNamaKriteria());
-
-            // Set a preferred size for the label
-            label.setPreferredSize(new Dimension(300, 50)); // Adjust dimensions as needed
-            label.setMaximumSize(new Dimension(300, 50)); // Ensure the label does not exceed the preferred size
+            label.setText(e.getNamaKriteria() + " (" + e.getTipeKriteria()  + ")");
+            label.setName(String.valueOf(e.getId())+"_" + e.getTipeKriteria());
             label.setAlignmentX(JLabel.CENTER_ALIGNMENT); // Center align the label
-
-            // Add spacing around the label using EmptyBorder
-            label.setBorder(new EmptyBorder(10, 10, 10, 10)); // Adjust the padding as needed
+            label.setBorder(new EmptyBorder(70, 70, 70, 70));
 
             kriteriaPanel.add(label);
         });
@@ -84,24 +74,17 @@ public class PenilaianForm extends javax.swing.JFrame {
         listAlternatif = alternatif;
         
         alternatifPanel.setLayout(new BoxLayout(alternatifPanel, BoxLayout.Y_AXIS));
-        alternatifPanel.setMaximumSize(new Dimension(70, 421));
-        alternatifPanel.setPreferredSize(new Dimension(70, 421));
-
+        
         // Clear the panel before adding new components
         alternatifPanel.removeAll();
 
         listAlternatif.forEach((a) -> {
             JLabel label = new JLabel();
             label.setText(a.getNamaAlternatif());
-            System.out.println(a.getNamaAlternatif());
 
             // Set a preferred size for the label
-            label.setPreferredSize(new Dimension(70, 50)); // Adjust dimensions as needed
-            label.setMaximumSize(new Dimension(70, 50)); // Ensure the label does not exceed the preferred size
             label.setAlignmentX(JLabel.CENTER_ALIGNMENT); // Center align the label
-
-            // Add spacing around the label using EmptyBorder
-            label.setBorder(new EmptyBorder(10, 10, 10, 10)); // Adjust the padding as needed
+            label.setBorder(new EmptyBorder(40, 10, 40, 10)); // Adjust the padding as needed
 
             alternatifPanel.add(label);
         });
@@ -109,29 +92,23 @@ public class PenilaianForm extends javax.swing.JFrame {
         // Revalidate and repaint the panel to ensure it displays the new labels
         alternatifPanel.revalidate();
         alternatifPanel.repaint();
-
-        // Initialize and set up the formPanel for the matrix
-        int rows = listAlternatif.size();
-        int cols = listKriteria.size();
-        formPanel.setLayout(new GridLayout(rows, cols));
-        formPanel.setPreferredSize(new Dimension(743, 0));
-
-        // Clear the panel before adding new components
-        formPanel.removeAll();
-
-        // Add JTextField components to the formPanel
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        // Set up the formPanel with GridLayout
+        formPanel.setLayout(new GridLayout(listAlternatif.size(), listKriteria.size(), 5, 5));
+        textFields = new JTextField[listAlternatif.size()][listKriteria.size()];
+         for (int i = 0; i < listAlternatif.size(); i++) {
+            for (int j = 0; j < listKriteria.size(); j++) {
                 JTextField textField = new JTextField();
-//                textField.setPreferredSize(new Dimension(30, 30)); // Smaller dimensions
+                textField.setName("textfield_" + i + "_" + j); // Set name of the text field
+                textField.setPreferredSize(new Dimension(100, 30)); // Set preferred size for text fields
                 formPanel.add(textField);
+                textFields[i][j] = textField; // Store in the matrix
             }
         }
 
-        // Revalidate and repaint the panel to ensure it displays the new text fields
         formPanel.revalidate();
         formPanel.repaint();
         
+
     }
     
     
@@ -145,13 +122,14 @@ public class PenilaianForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         btnKembali = new javax.swing.JButton();
         kriteriaPanel = new javax.swing.JPanel();
         formPanel = new javax.swing.JPanel();
         alternatifPanel = new javax.swing.JPanel();
+        btnHitung = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1300, 900));
 
         jPanel1.setBackground(new java.awt.Color(204, 51, 0));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -166,25 +144,11 @@ public class PenilaianForm extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
         );
 
         btnKembali.setText("Kembali");
@@ -200,7 +164,7 @@ public class PenilaianForm extends javax.swing.JFrame {
         kriteriaPanel.setLayout(kriteriaPanelLayout);
         kriteriaPanelLayout.setHorizontalGroup(
             kriteriaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         kriteriaPanelLayout.setVerticalGroup(
             kriteriaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,16 +172,18 @@ public class PenilaianForm extends javax.swing.JFrame {
         );
 
         formPanel.setBackground(new java.awt.Color(153, 153, 255));
+        formPanel.setToolTipText("");
+        formPanel.setPreferredSize(new java.awt.Dimension(400, 0));
 
         javax.swing.GroupLayout formPanelLayout = new javax.swing.GroupLayout(formPanel);
         formPanel.setLayout(formPanelLayout);
         formPanelLayout.setHorizontalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         formPanelLayout.setVerticalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 230, Short.MAX_VALUE)
         );
 
         alternatifPanel.setBackground(new java.awt.Color(153, 153, 255));
@@ -231,45 +197,54 @@ public class PenilaianForm extends javax.swing.JFrame {
         );
         alternatifPanelLayout.setVerticalGroup(
             alternatifPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        btnHitung.setText("Hitung");
+        btnHitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHitungActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(331, 331, 331)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnKembali))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(alternatifPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(kriteriaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnKembali))
-                .addGap(24, 24, 24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(kriteriaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE))))
+                .addGap(43, 43, 43))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(382, Short.MAX_VALUE)
+                .addComponent(btnHitung)
+                .addGap(351, 351, 351))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(btnKembali)
-                .addGap(37, 37, 37)
+                .addGap(43, 43, 43)
                 .addComponent(kriteriaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(alternatifPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(btnHitung)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -281,6 +256,92 @@ public class PenilaianForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
+    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+        calculateSAW();
+    }//GEN-LAST:event_btnHitungActionPerformed
+    
+    private void calculateSAW() {
+    double[][] values = new double[listAlternatif.size()][listKriteria.size()];
+
+    // Collect values from the text fields
+    for (int i = 0; i < listAlternatif.size(); i++) {
+        for (int j = 0; j < listKriteria.size(); j++) {
+            try {
+                values[i][j] = Double.parseDouble(textFields[i][j].getText());
+            } catch (NumberFormatException e) {
+                values[i][j] = 0;
+            }
+        }
+    }
+
+    // Normalize the values based on the type of criteria
+    double[][] normalizedValues = new double[listAlternatif.size()][listKriteria.size()];
+    for (int j = 0; j < listKriteria.size(); j++) {
+        double[] column = new double[listAlternatif.size()];
+        for (int i = 0; i < listAlternatif.size(); i++) {
+            column[i] = values[i][j];
+        }
+        double max = getMax(column);
+        double min = getMin(column);
+
+        for (int i = 0; i < listAlternatif.size(); i++) {
+            if (listKriteria.get(j).getTipeKriteria().equalsIgnoreCase("benefit")) {
+                normalizedValues[i][j] = values[i][j] / max;
+            } else {
+                normalizedValues[i][j] = min / values[i][j];
+            }
+        }
+    }
+
+    // Calculate the final scores for each alternative
+    double[] finalScores = new double[listAlternatif.size()];
+    for (int i = 0; i < listAlternatif.size(); i++) {
+        double score = 0;
+        for (int j = 0; j < listKriteria.size(); j++) {
+            double weight = listKriteria.get(j).getBobotKriteria() / 100.0; // Convert percentage to decimal
+            score += normalizedValues[i][j] * weight; // Apply the weight
+        }
+        finalScores[i] = score;
+    }
+
+    // Insert normalized values and final scores into the database
+    NormalisasiDAO normalisasiDAO = new NormalisasiDAOMySQL();
+    RankingDAO rankingDAO = new RankingDAOMySQL();
+
+    normalisasiDAO.deleteAllNormalizedValues();
+    rankingDAO.deleteAllFinalScores();
+    for (int i = 0; i < listAlternatif.size(); i++) {
+        for (int j = 0; j < listKriteria.size(); j++) {
+            normalisasiDAO.insertNormalizedValue(listAlternatif.get(i).getId(), listKriteria.get(j).getId(), normalizedValues[i][j]);
+        }
+        rankingDAO.insertFinalScore(listAlternatif.get(i).getId(), finalScores[i]);
+    }
+
+    // Open the NormalisasiMatriks form to display the results
+    NormalisasiMatriks normalisasiMatriks = new NormalisasiMatriks(normalizedValues, finalScores, listKriteria, listAlternatif);
+    normalisasiMatriks.setVisible(true);
+}
+
+
+    private double getMax(double[] array) {
+        double max = array[0];
+        for (double v : array) {
+            if (v > max) {
+                max = v;
+            }
+        }
+        return max;
+    }
+
+    private double getMin(double[] array) {
+        double min = array[0];
+        for (double v : array) {
+            if (v < min) {
+                min = v;
+            }
+        }
+        return min;
+    }
     /**
      * @param args the command line arguments
      */
@@ -321,11 +382,11 @@ public class PenilaianForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel alternatifPanel;
+    private javax.swing.JButton btnHitung;
     private javax.swing.JButton btnKembali;
     private javax.swing.JPanel formPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel kriteriaPanel;
     // End of variables declaration//GEN-END:variables
 }

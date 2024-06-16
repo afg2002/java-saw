@@ -84,7 +84,7 @@ public class KriteriaForm extends javax.swing.JFrame {
         Kriteria a = recKriterias.get(tabKriteria.getSelectedRow());
         txtId.setText(String.valueOf(a.getId()));
         txtNamaKriteria.setText(a.getNamaKriteria());
-        cbBobotKriteria.setSelectedItem(String.valueOf(a.getBobotKriteria()));
+        txtBobot.setText(String.valueOf(a.getBobotKriteria()));
         cbTipeKriteria.setSelectedItem(a.getTipeKriteria());
     }
 
@@ -144,8 +144,9 @@ public class KriteriaForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cbTipeKriteria = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        cbBobotKriteria = new javax.swing.JComboBox<>();
         btnKembali = new javax.swing.JButton();
+        txtBobot = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -238,14 +239,15 @@ public class KriteriaForm extends javax.swing.JFrame {
 
         jLabel5.setText("Bobot Kriteria");
 
-        cbBobotKriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "== Bobot Kriteria == ", "1", "2", "3", "4", "5" }));
-
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKembaliActionPerformed(evt);
             }
         });
+
+        jLabel6.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel6.setText("*Buat bobot dalam bentuk persen dan  maksimal 100%");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,11 +274,14 @@ public class KriteriaForm extends javax.swing.JFrame {
                         .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCari))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cbTipeKriteria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNamaKriteria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                        .addComponent(cbBobotKriteria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtBobot, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbTipeKriteria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNamaKriteria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)))
                 .addContainerGap(93, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -302,9 +307,10 @@ public class KriteriaForm extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbTipeKriteria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbBobotKriteria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBobot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
@@ -340,7 +346,7 @@ public class KriteriaForm extends javax.swing.JFrame {
             kriteria.setId(1);
             kriteria.setNamaKriteria(txtNamaKriteria.getText());
             kriteria.setTipeKriteria(cbTipeKriteria.getSelectedItem().toString());
-            kriteria.setBobotKriteria(Integer.parseInt((String) cbBobotKriteria.getSelectedItem()));
+            kriteria.setBobotKriteria(Integer.parseInt((String) txtBobot.getText()));
             kriteriaDao.insertKriteria(kriteria);
             loadAllKriteria();
             tableFill();
@@ -357,7 +363,7 @@ public class KriteriaForm extends javax.swing.JFrame {
             kriteria.setId(Integer.parseInt(kriteriaId));
             kriteria.setNamaKriteria(txtNamaKriteria.getText());
             kriteria.setTipeKriteria(cbTipeKriteria.getSelectedItem().toString());
-            kriteria.setBobotKriteria(Integer.parseInt((String) cbBobotKriteria.getSelectedItem()));
+            kriteria.setBobotKriteria(Integer.parseInt((String) txtBobot.getText()));
             kriteriaDao.updateKriteria(kriteria);
             loadAllKriteria();
             tableFill();
@@ -425,17 +431,18 @@ public class KriteriaForm extends javax.swing.JFrame {
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbBobotKriteria;
     private javax.swing.JComboBox<String> cbTipeKriteria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabKriteria;
+    private javax.swing.JTextField txtBobot;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNamaKriteria;
