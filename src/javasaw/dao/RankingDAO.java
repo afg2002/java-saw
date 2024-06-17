@@ -4,6 +4,9 @@
  */
 package javasaw.dao;
 
+import java.util.List;
+import javasaw.model.Ranking;
+
 /**
  *
  * @author Afghan
@@ -11,4 +14,5 @@ package javasaw.dao;
 public interface RankingDAO {
      public void insertFinalScore(int alternatifId, double finalScore);
      public void deleteAllFinalScores();
+     public List<Ranking> getRankingFinalScore();
 }

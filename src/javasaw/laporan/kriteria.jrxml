@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9616100-3e43-4787-b79f-37dbf3d24ff8">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="13"/>
+	<property name="ireport.y" value="3"/>
+	<queryString>
+		<![CDATA[SELECT r.id, r.alternatif_id, r.skor_akhir, a.nama_alternatif, 
+       RANK() OVER (ORDER BY r.skor_akhir DESC) AS ranking 
+FROM ranking r 
+JOIN alternatif a ON r.alternatif_id = a.id;
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alternatif_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="skor_akhir" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_alternatif" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ranking" class="java.math.BigInteger"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="0" width="428" height="79" uuid="bd2518fa-bb13-4a12-8006-c2a39660eace"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEM PENDUKUNG KEPUTUSAN DENGAN METODE SAW]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="253" y="20" width="267" height="27" uuid="e93e0d1b-507e-4177-a9b2-6b3289e49fee"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN DATA RANKING]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="7" width="802" height="1" uuid="61eb6d4b-8b7c-44e8-913a-0b8db4548d1c"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<rectangle>
+				<reportElement x="133" y="41" width="54" height="20" backcolor="#3399FF" uuid="16c56021-5b07-40e0-b940-682b866b48c9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="187" y="41" width="98" height="20" backcolor="#3399FF" uuid="c752bc41-e01b-46c0-a1f5-90a31483828b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="285" y="41" width="165" height="20" backcolor="#3399FF" uuid="3e52dc30-5c0e-476b-944d-dce824d3cbed"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="450" y="41" width="138" height="20" backcolor="#3399FF" uuid="9895cc4d-07a5-42d8-be1d-0c4a74cc291e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="588" y="41" width="55" height="20" backcolor="#3399FF" uuid="a9f5c8f0-7a83-4682-b9dd-792054314a4c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="133" y="41" width="54" height="20" uuid="f70f6127-eae6-497f-893f-e17933251619"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="41" width="138" height="20" uuid="55e47113-a957-4cd7-889b-6dd857b2f0bf"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SKOR AKHIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="588" y="41" width="54" height="20" uuid="d948ce2f-c22b-4ed9-8b5f-6cd96096e8e3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RANKING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="41" width="98" height="20" uuid="42a925b0-20fe-4825-9ec2-92e7a6e5c2d7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTERNATIF_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="42" width="165" height="19" uuid="22852363-c7bd-46a4-af9c-ea16282e1749"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA ALTERNATIF]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="133" y="1" width="54" height="20" backcolor="#3399FF" uuid="c940921f-174c-4d8d-8c84-3e1b84782ad8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="187" y="1" width="98" height="20" backcolor="#3399FF" uuid="bd6e6ead-ba63-4a7d-b759-061fbd675024"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="285" y="1" width="165" height="20" backcolor="#3399FF" uuid="ed85e032-50d3-4cff-bfa8-4023c0ca5672"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="450" y="1" width="138" height="20" backcolor="#3399FF" uuid="13e222ea-5cac-4ede-bdd1-60d653220093"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="588" y="1" width="54" height="20" backcolor="#3399FF" uuid="6fe52e9f-6742-4dc1-b2ad-bf7c5c92abca"/>
+			</rectangle>
+			<textField>
+				<reportElement x="133" y="1" width="54" height="20" uuid="d1014d03-364b-4175-a16a-71899d7bc9f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="1" width="98" height="20" uuid="0cc81e26-9908-4613-957e-2e7dda48b08a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alternatif_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="0" width="165" height="20" uuid="2547d075-c21f-4953-8abe-28ab498f2e37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_alternatif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="588" y="0" width="55" height="20" uuid="4f056499-fa96-4b84-b51a-47cbd06b156f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ranking}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="138" height="20" uuid="fae0ec5b-33cb-4cf4-abee-90b55541fc30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{skor_akhir}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="200">
+			<staticText>
+				<reportElement x="598" y="37" width="43" height="20" uuid="a3c9b9d3-2358-40cb-825c-0d36261ce138"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Lokasi]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="641" y="37" width="124" height="20" uuid="f64ee930-b87c-49e9-be0c-00cc597829d5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

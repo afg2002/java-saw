@@ -4,11 +4,19 @@
  */
 package javasaw.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  *
  * @author Afghan
  */
+@Data
+@NoArgsConstructor
 public class Ranking {
+    int id;
     int alternatif_id;
-    String skor_akhir;
+    String nama_alternatif;
+    double skor_akhir;
+    int ranking;
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9616100-3e43-4787-b79f-37dbf3d24ff8">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="13"/>
+	<property name="ireport.y" value="3"/>
+	<queryString>
+		<![CDATA[select * from alternatif]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_alternatif" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="0" width="428" height="79" uuid="bd2518fa-bb13-4a12-8006-c2a39660eace"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEM PENDUKUNG KEPUTUSAN DENGAN METODE SAW]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="253" y="20" width="317" height="27" uuid="e93e0d1b-507e-4177-a9b2-6b3289e49fee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN DATA ALTERNATIF]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="7" width="802" height="1" uuid="61eb6d4b-8b7c-44e8-913a-0b8db4548d1c"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<rectangle>
+				<reportElement x="338" y="40" width="54" height="20" backcolor="#3399FF" uuid="16c56021-5b07-40e0-b940-682b866b48c9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="392" y="40" width="98" height="20" backcolor="#3399FF" uuid="c752bc41-e01b-46c0-a1f5-90a31483828b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="338" y="40" width="54" height="20" uuid="f70f6127-eae6-497f-893f-e17933251619"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="42" width="98" height="19" uuid="22852363-c7bd-46a4-af9c-ea16282e1749"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA ALTERNATIF]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="338" y="0" width="54" height="20" backcolor="#3399FF" uuid="c940921f-174c-4d8d-8c84-3e1b84782ad8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="392" y="0" width="98" height="20" backcolor="#3399FF" uuid="bd6e6ead-ba63-4a7d-b759-061fbd675024"/>
+			</rectangle>
+			<textField>
+				<reportElement x="338" y="1" width="54" height="19" uuid="ecba8606-442a-43ba-8b83-3b16a81d3b91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="1" width="98" height="20" uuid="53384919-74c5-40a7-be42-8fcfb232ce30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_alternatif}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="200">
+			<staticText>
+				<reportElement x="598" y="37" width="43" height="20" uuid="a3c9b9d3-2358-40cb-825c-0d36261ce138"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Lokasi]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="641" y="37" width="124" height="20" uuid="f64ee930-b87c-49e9-be0c-00cc597829d5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

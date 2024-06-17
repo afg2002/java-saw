@@ -3,17 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/RankingForm.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/LoginForm.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/AlternatifDAOMySQL.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/RankingDAOMySQL.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/UserForm.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/RankingDAO.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/model/Alternatif.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/model/Normalisasi.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/database/DatabaseMySQL.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/AlternatifForm.java</file>
             <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/PenilaianForm.java</file>
             <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/NormalisasiMatriks.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/LoginForm.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/AlternatifDAO.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/NormalisasiDAO.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/NormalisasiDAOMySQL.java</file>
             <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/DashboardForm.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/AlternatifDAOMySQL.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/UserForm.java</file>
             <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/KriteriaForm.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/model/Alternatif.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/PenilaianDAOMySQL.java</file>
             <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/model/Kriteria.java</file>
-            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/view/AlternatifForm.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/dao/PenilaianDAO.java</file>
+            <file>file:/C:/Users/Afghan/Documents/NetBeansProjects/java-saw/src/javasaw/model/Ranking.java</file>
         </group>
     </open-files>
 </project-private>

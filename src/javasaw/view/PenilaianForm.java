@@ -4,6 +4,7 @@
  */
 package javasaw.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -19,6 +20,8 @@ import javasaw.model.Alternatif;
 import javasaw.model.Kriteria;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -43,7 +46,6 @@ public class PenilaianForm extends javax.swing.JFrame {
         kriteriaDAO = new KriteriaDAOMySQL();
         alternatifDAO = new AlternatifDAOMySQL();
         loadKriteriaRowAndColumn();
-        
         
     }
     
@@ -128,8 +130,8 @@ public class PenilaianForm extends javax.swing.JFrame {
         alternatifPanel = new javax.swing.JPanel();
         btnHitung = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 900));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1600, 900));
 
         jPanel1.setBackground(new java.awt.Color(204, 51, 0));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -179,7 +181,7 @@ public class PenilaianForm extends javax.swing.JFrame {
         formPanel.setLayout(formPanelLayout);
         formPanelLayout.setHorizontalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 844, Short.MAX_VALUE)
         );
         formPanelLayout.setVerticalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,13 +224,10 @@ public class PenilaianForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(kriteriaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE))))
+                            .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                            .addComponent(btnHitung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(43, 43, 43))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(382, Short.MAX_VALUE)
-                .addComponent(btnHitung)
-                .addGap(351, 351, 351))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,9 +241,9 @@ public class PenilaianForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(alternatifPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
-                .addComponent(btnHitung)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnHitung, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -257,6 +256,23 @@ public class PenilaianForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+        // Validate that all fields are filled and contain valid integers
+        for (int i = 0; i < listAlternatif.size(); i++) {
+            for (int j = 0; j < listKriteria.size(); j++) {
+                String text = textFields[i][j].getText();
+                if (text.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Semua field harus diisi", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try {
+                    Double.parseDouble(text);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Field harus berupa angka.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        }
+        
         calculateSAW();
     }//GEN-LAST:event_btnHitungActionPerformed
     
@@ -301,7 +317,7 @@ public class PenilaianForm extends javax.swing.JFrame {
             double weight = listKriteria.get(j).getBobotKriteria() / 100.0; // Convert percentage to decimal
             score += normalizedValues[i][j] * weight; // Apply the weight
         }
-        finalScores[i] = score;
+        finalScores[i] = Double.parseDouble(String.format("%.4f", score)); // Format to 4 decimal places
     }
 
     // Insert normalized values and final scores into the database
